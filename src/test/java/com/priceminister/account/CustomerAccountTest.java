@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.priceminister.account.implementation.CustomerAccount;
+import com.priceminister.account.implementation.CustomerAccountRule;
 
 /**
  * Please create the business code, starting from the unit tests below. Implement the first test,
@@ -24,6 +25,7 @@ public class CustomerAccountTest {
     @Before
     public void setUp() throws Exception {
         customerAccount = new CustomerAccount();
+        rule = new CustomerAccountRule();
     }
     
     /**
@@ -49,14 +51,60 @@ public class CustomerAccountTest {
     }
     
     /**
-     * Tests that an illegal withdrawal throws the expected exception. Use the logic contained in
-     * CustomerAccountRule; feel free to refactor the existing code.
+     * Test add negtive amount.
      */
-    @Test
-    public void testWithdrawAndReportBalanceIllegalBalance() {
-       // fail("not yet implemented");
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNegtiveAmount() {
+        Double addedAmount2 = -4.71;
+        customerAccount.add(addedAmount2);
     }
     
-    // Also implement missing unit tests for the above functionalities.
+    /**
+     * Tests that an illegal withdrawal throws the expected exception. Use the logic contained in
+     * CustomerAccountRule;
+     * 
+     * @throws IllegalBalanceException
+     */
+    @Test(expected = IllegalBalanceException.class)
+    public void testWithdrawAndReportBalanceIllegalBalance() throws IllegalBalanceException {
+        Double addedAmount1 = 5.30;
+        customerAccount.add(addedAmount1);
+        
+        Double withdrawnAmount = 40.71;
+        customerAccount.withdrawAndReportBalance(withdrawnAmount, rule);
+        
+    }
+    
+    /**
+     * Test withdraw negative amount.
+     *
+     * @throws IllegalBalanceException the illegal balance exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawNegativeAmount() throws IllegalBalanceException {
+        Double addedAmount1 = 5.30;
+        customerAccount.add(addedAmount1);
+        
+        Double withdrawnAmount = -40.71;
+        customerAccount.withdrawAndReportBalance(withdrawnAmount, rule);
+        
+    }
+    
+    /**
+     * Test withdraw ok.
+     *
+     * @throws IllegalBalanceException the illegal balance exception
+     */
+    @Test
+    public void testWithdrawOk() throws IllegalBalanceException {
+        Double addedAmount1 = 5.30;
+        Double expectedAmount = 4.10;
+        customerAccount.add(addedAmount1);
+        
+        Double withdrawnAmount = 1.20;
+        customerAccount.withdrawAndReportBalance(withdrawnAmount, rule);
+        assertEquals(expectedAmount, customerAccount.getBalance());
+        
+    }
     
 }
