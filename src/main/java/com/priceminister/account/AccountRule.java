@@ -20,7 +20,7 @@ public interface AccountRule {
      * @param addedAmount -the added amount
      */
     static void checkAmountPositive(Double addedAmount) {
-        if (addedAmount < 0) {
+        if (addedAmount == null || addedAmount < 0) {
             throw new IllegalArgumentException();
         }
     }

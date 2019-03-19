@@ -22,6 +22,11 @@ public class CustomerAccount implements Account {
     
     public Double withdrawAndReportBalance(Double withdrawnAmount, AccountRule rule)
         throws IllegalBalanceException {
+        
+        if (rule == null) {
+            throw new IllegalArgumentException("You must provide a rule");
+        }
+        
         AccountRule.checkAmountPositive(withdrawnAmount);
         Double localBalance = accountBalance - withdrawnAmount;
         if (!rule.withdrawPermitted(localBalance)) {

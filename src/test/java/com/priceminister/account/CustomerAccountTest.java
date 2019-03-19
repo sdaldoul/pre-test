@@ -60,6 +60,15 @@ public class CustomerAccountTest {
     }
     
     /**
+     * Test add null amount.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNullAmount() {
+        
+        customerAccount.add(null);
+    }
+    
+    /**
      * Tests that an illegal withdrawal throws the expected exception. Use the logic contained in
      * CustomerAccountRule;
      * 
@@ -87,6 +96,28 @@ public class CustomerAccountTest {
         
         Double withdrawnAmount = -40.71;
         customerAccount.withdrawAndReportBalance(withdrawnAmount, rule);
+        
+    }
+    
+    /**
+     * Test withdraw null amount.
+     *
+     * @throws IllegalBalanceException the illegal balance exception
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawNullAmount() throws IllegalBalanceException {
+        
+        customerAccount.withdrawAndReportBalance(null, rule);
+        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawNullRule() throws IllegalBalanceException {
+        
+        Double addedAmount1 = 5.30;
+        customerAccount.add(addedAmount1);
+        Double withdrawnAmount = 4.71;
+        customerAccount.withdrawAndReportBalance(withdrawnAmount, null);
         
     }
     
