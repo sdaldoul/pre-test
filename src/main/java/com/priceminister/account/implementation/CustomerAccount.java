@@ -6,7 +6,7 @@ import com.priceminister.account.IllegalBalanceException;
 
 public class CustomerAccount implements Account {
     
-    Double accountBalance = 0.0;
+    private Double accountBalance = 0.0;
     
     public void add(Double addedAmount) {
         AccountRule.checkAmountPositive(addedAmount);
