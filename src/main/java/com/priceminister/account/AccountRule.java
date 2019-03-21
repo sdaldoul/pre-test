@@ -14,14 +14,4 @@ public interface AccountRule {
      */
     boolean withdrawPermitted(Double resultingAccountBalance);
     
-    /**
-     * Checks amount positive, if amount in negative throw IllegalArgumentException
-     *
-     * @param addedAmount -the added amount
-     */
-    static void checkAmountPositive(Double addedAmount) {
-        if (addedAmount == null || addedAmount < 0) {
-            throw new IllegalArgumentException();
-        }
-    }
 }
